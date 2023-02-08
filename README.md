@@ -1,7 +1,8 @@
 # vue3-confirm-dialog
 Vue.js 3 version of Onur Aslan's Simple Confirm Dialog verification plugin
 
-### Work in progress, not published to NPM yet
+![vue-confirm](./images/confirmWindow.png)
+
 Plug-and-play confirmation plugin for Vue 3 and Vuex 4,written in new Conditional API.
 
 No custom template required - just load the pluing and use it right away.
@@ -45,7 +46,7 @@ In App.vue:
 </script>
 ```
 
-In any of functions :
+In any of Vue functions :
 
 ```js
 methods: {
@@ -98,13 +99,15 @@ export default {
           /**
           * Callback Function
           * @param {Boolean} confirm
+          * @param {String} password //if auth:true
           */
-          callback: confirm => {
-            if (confirm) {
-              // ... do something
+          callback: (confirm, password) => {
+            //if auth:true
+            if (confirm && password == YOUR_PASSWORD) {
+                // ...do something
             }
           }
-      })
+       })
     }
   }
 }
@@ -144,7 +147,6 @@ this.$confirm({
 If you want to use only for information and you want of see one button in dialog, you can use only one of 'no' or 'yes' button object.
 Beware: clicking the single button still counts as clicking the YES/NO button. So, use "button:{no:'OK'}" if you want to just inform and not call the callback
 
-![vue-confirm](https://media.giphy.com/media/U3y0rmoC4SUySJxJqL/giphy.gif)
 
 ```js
 methods: {
