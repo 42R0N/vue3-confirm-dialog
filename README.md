@@ -2,28 +2,38 @@
 Vue.js 3 version of Onur Aslan's Simple Confirm Dialog verification plugin
 
 ### Work in progress, not published to NPM yet
+Plug-and-play confirmation plugin for Vue 3 and Vuex 4,written in new Conditional API.
+
+No custom template required - just load the pluing and use it right away.
+Custom Title, Message and Button names.
+Can be used as password input and confirmation window at the same time.
+Supports confirmation by pressing Enter and closing the window by pressing Escape. This functionality can be turned off. 
 
 ## Install
 
 ```bash
-$ npm install --save vue-confirm-dialog
+$ npm install --save vue3-confirm-dialog
 ```
 
 ## Quick Start Usage
 
-In main.js or plugin (for Nuxt.js):
+In app.js:
 
 ```js
 import Vue3ConfirmDialog from 'vue3-confirm-dialog'
-Vue.use(Vue3ConfirmDialog)
-```
 
-In App.vue (or in the template file for Nuxt.js (layout/default.vue)):
+const app = createApp(); // use your app name
+app.use(Vue3ConfirmDialog);
+
+```
+Component is installed automatically by the plugin, you dont need to add it manually.
+
+In App.vue:
 
 ```html
 <template>
   <div id="app">
-    <vue-confirm-dialog></vue-confirm-dialog>
+    <vue3-confirm-dialog/>
     <!-- your code -->
   </div>
 </template>
@@ -42,9 +52,10 @@ methods: {
     handleClick(){
       this.$confirm(
         {
+          title: 'Confirm your action',
           message: 'Are you sure?',
           disableKeys: false,
-          auth: false
+          auth: false,
           button: {
             no: 'No',
             yes: 'Yes'
@@ -64,27 +75,35 @@ methods: {
   }
 ```
 
-#not yet implemented
-If you want to use in \*.js file (e.g Vuex Store) before import Vue and after use Vue.\$confirm.
+If you want to use it in \*.js file (e.g Vuex Store) import the confirm function directly
 
 
 ```js
-import Vue from 'vue'
+import { confirm } from 'vue3-confirm-dialog'
+
 export default {
   namespaced: true,
   state: {},
   actions: {
     logout({ commit }) {
-      Vue.$confirm({
-        title: 'Are you sure?',
-        message: 'Are you sure you want to logout?',
-        button: {
-          yes: 'Yes',
-          no: 'Cancel'
-        },
-        callback: confirm => {
-          // ...do something
-        }
+      confirm({
+        title: 'Confirm your action',
+          message: 'Are you sure?',
+          disableKeys: false,
+          auth: false,
+          button: {
+            no: 'No',
+            yes: 'Yes'
+          },
+          /**
+          * Callback Function
+          * @param {Boolean} confirm
+          */
+          callback: confirm => {
+            if (confirm) {
+              // ... do something
+            }
+          }
       })
     }
   }
@@ -98,28 +117,32 @@ By default, you can confirm the dialog by pressing "enter" or deny by pressing "
 
 ```js
 this.$confirm({
-  auth: true,
-  message: 'foo',
-  button: {
-    yes: 'Yes',
-    no: 'Cancel'
-  },
-  /**
-   * Callback Function
-   * @param {Boolean} confirm
-   * @param {String} password
-   */
-  callback: (confirm, password) => {
-    if (confirm && password == YOUR_PASSWORD) {
-      // ...do something
+    title: 'Confirm your action',
+    message: 'Are you sure?',
+    disableKeys: false,
+    auth: false,
+    button: {
+        no: 'No',
+        yes: 'Yes'
+    },
+    /**
+     * Callback Function
+     * @param {Boolean} confirm
+     * @param {String} password //if auth:true
+    */
+    callback: (confirm, password) => {
+        //if auth:true
+        if (confirm && password == YOUR_PASSWORD) {
+        // ...do something
+        }
     }
-  }
-})
+});
 ```
 
 ## Use only for information
 
 If you want to use only for information and you want of see one button in dialog, you can use only one of 'no' or 'yes' button object.
+Beware: clicking the single button still counts as clicking the YES/NO button. So, use "button:{no:'OK'}" if you want to just inform and not call the callback
 
 ![vue-confirm](https://media.giphy.com/media/U3y0rmoC4SUySJxJqL/giphy.gif)
 
@@ -130,8 +153,10 @@ methods: {
         {
           title: 'Information',
           message: 'This content has been removed',
+          disableKeys: false,
+          auth: false,
           button: {
-          	yes: 'OK',
+          	no: 'OK',
           }
         },
         /**
