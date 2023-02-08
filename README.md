@@ -3,12 +3,12 @@ Vue.js 3 version of Onur Aslan's Simple Confirm Dialog verification plugin
 
 ![vue-confirm](./images/confirmWindow.png)
 
-Plug-and-play confirmation plugin for Vue 3 and Vuex 4,written in new Conditional API.
+## Plug-and-play confirmation plugin for Vue 3 and Vuex 4, written in the new Conditional API.
 
-No custom template required - just load the pluing and use it right away.
-Custom Title, Message and Button names.
-Can be used as password input and confirmation window at the same time.
-Supports confirmation by pressing Enter and closing the window by pressing Escape. This functionality can be turned off. 
+- No custom template required - just load the plugin and use it right away.
+- Custom Title, Message and Button names.
+- Can be used as password input and confirmation window at the same time.
+- Supports confirmation by pressing Enter and closing the window by pressing Escape. This functionality can be turned off.
 
 ## Install
 
